@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Studio Barber</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Fjalla+One&family=League+Gothic&family=Staatliches&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <style>
+    body {
+        margin: 0;
+        padding: 0;
+        overflow-x: hidden;
+        width: 100%;
+        height: 100%;
+        background: 
+            linear-gradient(to bottom left,
+            #6c657a,   
+            #59506d,   /* quase branco */
+            #2c2655,   /* cinza bem escuro */
+            #1c0039    /* quase preto */
+            );
+        background-blend-mode: overlay;
+        background-attachment: fixed;
+        background-repeat: no-repeat;
+        position: relative;
+        z-index: -2;
+    }
+    header {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 4vw;
+        min-height: 45px;
+        font-family: Arial, Helvetica, sans-serif;
+        user-select: none;
+        position: sticky;
+        top: 0;
+    }
+    .header {
+        display: flex;
+        align-items: center;
+        background-color: black;
+        box-shadow: -5px 10px 15px rgba(0, 0, 0, 0.75);
+        width: 100%;
+        height: 4vw;
+        min-height: 45px;
+        z-index: 100;
+    }
+    .header i {
+        margin-left: 10px;
+        font-size: 25px;
+        width: 25px;
+        color: lightyellow;
+        text-shadow: 0 0 5px gray, 0 0 20px gray;
+        transition: color 0.7s ease, text-shadow 0.7s ease;
+        cursor: pointer;
+    }
+    .header i:hover {
+        color: white;
+        text-shadow: 0 0 20px white;
+    }
+    .header h2 {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+         font-family: "Bebas Neue", sans-serif;
+        font-weight: 400;
+        font-style: normal;
+        letter-spacing: 1.5px;
+        height: 4vw;
+        min-height: 45px;
+        width: 100%;
+        color: lightyellow;
+        text-shadow: 0 0 5px gray, 0 0 20px gray;
+    }
+    .header-list, .header-list ul {
+        margin: 0;
+        padding: 0;
+    }
+    .header-list {
+        position: relative;
+        z-index: -1;
+        transition: transform 0.5s ease-in-out;
+        transform: translateY(-100%);
+    }
+    .header-list.on {
+        transform: translateY(0);
+    }
+    .header-list li {
+        list-style: none;
+        background-color: gray;
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        height: 2.5vw;
+        min-height: 40px;
+        width: 100%;
+        max-width: 400px;
+        color: lightgray;
+        text-shadow: 0 0 5px black, 0 0 20px black;
+        transition: color 0.7s ease, text-shadow 0.7s ease, background-color 0.7s ease;
+    }
+    .header-list li:hover {
+        color: white;
+        background-color: darkgray;
+        text-shadow: 0 0 25px white, 0 0 20px black, 0 0 5px black;
+    }
+    .header-list i {
+        margin-left: 15px;
+        margin-right: 15px;
+    }
+    .fade-in {
+    animation: aparecer 0.3s ease forwards;
+    }
+    .fade-out {
+    animation: desaparecer 0.3s ease forwards;
+    }
+    
+    .page-body {
+        display: none;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+        width: 100%;
+        height: auto;
+        margin: 10px 0;
+        padding: 0;
+        user-select: none;
+        position: relative;
+        z-index: -2;
+    }
+    .page-body.ativo {
+        display: flex;
+    }
+    .quadrado1, .quadrado2, .quadrado3, .quadrado4 {
+        width: 250px;
+        height: 250px;
+        color: lightyellow;
+        margin: 15px 15px;
+        background-color: rgba(128, 128, 128, 0.5); 
+        backdrop-filter: blur(10px); 
+        -webkit-backdrop-filter: blur(10px); 
+        box-shadow: 4px 4px 20px black;
+        border: 2px solid black;
+        font-family: sans-serif;
+        cursor: pointer;
+        transform: translateY(-230%);
+        transition: scale 0.5s ease, background-color 0.5s ease;
+    }
+    .quadrado1:hover, .quadrado2:hover, .quadrado3:hover, .quadrado4:hover {
+        scale: 1.05;
+        background-color: rgba(0, 0, 0, 0.5);
+    }
+    .quadrado1 {
+        animation: deslizar 1s ease forwards;
+    }
+    .quadrado2 {
+        animation: deslizar 1s ease forwards;
+        animation-delay: 0.2s;
+    }
+    .quadrado3 {
+        animation: deslizar 1s ease forwards;
+        animation-delay: 0.4s;
+    }
+    .quadrado4 {
+        animation: deslizar 1s ease forwards;
+        animation-delay: 0.6s;
+    }
+    .quadrado1 h2, .quadrado2 h2, .quadrado3 h2, .quadrado4 h2 {
+        margin-left: 0;
+        margin-right: 0;
+        margin-top: 20px;
+        margin-bottom: 20px;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+    }
+    .quadrado1 span, .quadrado2 span, .quadrado3 span, .quadrado4 span {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .quadrado1 i, .quadrado2 i, .quadrado3 i, .quadrado4 i {
+        margin-right: 10px;
+    }
+    .studio-barber-duv {
+        user-select: none;
+        position: relative;
+        z-index: -3;
+    }
+    .studio-barber-duv:not(.ativo) {
+        display: none;
+    }
+    .studio-barber-duv.ativo h1, .studio-barber-duv.ativo h3, .studio-barber-duv.ativo .form-duv form {
+        margin-top: 15px;
+        margin-bottom: 0;
+        margin-left: 0;
+        margin-right: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        padding: 0;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+    .studio-barber-duv h3 {
+        margin: 0;
+        text-shadow: 1px 1px 4px black, 1px 1px 2px black;
+        color: lightyellow;
+        animation: scaleAparecer 0.5s ease 1.8s both;
+    }
+    .form-duv input:nth-child(1) {
+        animation: scaleAparecer 0.5s ease 2s both;
+    }
+    .form-duv input:nth-child(2) {
+        animation: scaleAparecer 0.5s ease 2.2s both;
+    }
+    .form-duv input {
+        margin-bottom: 10px;
+        padding-left: 10px;
+        border: 1px solid black;
+        outline: none;
+        width: 250px;
+        height: 25px;
+        background-color: rgba(128, 128, 128, 0.5);
+        transition: background-color 0.5s ease, scale 0.5s ease;
+    }
+    .form-duv input:hover {
+        scale: 1.05;
+        background-color: rgba(0, 0, 0, 0.5);
+    }
+    .form-duv textarea:hover {
+        scale: 1.05;
+        background-color: rgba(0, 0, 0, 0.5);
+    }
+    .form-duv input::placeholder, .form-duv textarea::placeholder {
+        color: lightyellow;
+    }
+    .form-duv textarea {
+        padding-top: 15px;
+        padding-left: 15px;
+        margin: 0 0 15px 0;
+        width: 250px;
+        height: 80px;
+        resize: none;
+        border: 1px solid black;
+        outline: none;
+        background-color: rgba(128, 128, 128, 0.5);
+        animation: scaleAparecer 0.5s ease 2.4s both;
+        transition: background-color 0.5s ease, scale 0.5s ease;
+    }
+    .form-duv textarea:focus, .form-duv input:focus {
+        border: 1px solid blue;
+    }
+    .form-duv button {
+        cursor: pointer;
+        border: none;
+        outline: 1px solid black;
+        margin-bottom: 30px;
+        width: 150px;
+        height: 30px;
+        color: white;
+        font-weight: bold;
+        background-color: rgba(128, 128, 128, 0.5);
+        animation: scaleAparecer 0.5s ease 2.6s both;
+        transition: background-color 0.5s ease, scale 0.5s ease;
+    }
+    @keyframes scaleAparecer {
+        from {
+            transform: scale(0);
+        } to {
+            transform: scale(1);
+        }
+    }
+    .form-duv button:hover {
+        scale: 1.05;
+        background-color: rgba(0, 0, 0, 0.5);
+    }
+
+    @media (max-width: 960px) {
+        .unidade img:nth-child(2), .unidade img:nth-child(3) {
+            scale: 0;
+        }
+    }
+    @media (min-width: 300px) and (max-width: 330px) {
+        .unidade {
+            zoom: 0.8;
+        }
+    }
+    @media (min-width: 1401px) {
+        .header i {
+            margin-left: 20px; 
+        }
+    }
+    @media (min-width: 300px) and (max-width: 339px) {
+        .page-body {
+            zoom: 0.5;
+        }
+        .page-body span {
+            zoom: 0.85;
+        }
+        .images {
+            zoom: 0.3;
+        }
+        .container-images h2 {
+            zoom: 1.3;
+        }
+        .studio-barber-duv {
+            zoom: 0.7;
+        }
+    }
+    @media (min-width: 339px) and (max-width: 400px) {
+        .page-body {
+            zoom: 0.6;
+        }
+        .page-body span {
+            zoom: 0.9;
+        }
+        .images {
+            zoom: 0.35;
+        }
+        .container-images h2 {
+            zoom: 1.2;
+        }
+        .studio-barber-duv {
+            zoom: 0.75;
+        }
+    }
+    @media (min-width: 400px) and (max-width: 500px) {
+        .page-body {
+            zoom: 0.7;
+        }
+        .images {
+            zoom: 0.4;
+        }
+        .container-images h2 {
+            zoom: 1.2;
+        }
+        .studio-barber-duv {
+            zoom: 0.85;
+        }
+    }
+    @media (min-width: 500px) and (max-width: 600px) {
+        .page-body {
+            zoom: 0.8;
+        }
+        .images {
+            zoom: 0.5;
+        }
+        .container-images h2 {
+            zoom: 1.1;
+        }
+        .studio-barber-duv {
+            zoom: 0.95;
+        }
+    }
+    @media (min-width: 600px) and (max-width: 700px) {
+        .page-body {
+            zoom: 0.9;
+        }
+        .images {
+            zoom: 0.6;
+        }
+    }
+    @media (min-width: 700px) and (max-width: 800px) {
+        .page-body {
+            zoom: 1;
+        }
+        .images {
+            zoom: 0.65;
+        }
+    }
+    @media (min-width: 800px) and (max-width: 1132px) {
+        .images {
+            zoom: 0.7;
+        }
+    }
+    @media (min-width: 849px) and (max-width: 900px) {
+        .page-body {
+            zoom: 0.7;
+        }
+    }
+    @media (min-width: 900px) and (max-width: 1000px) {
+        .page-body {
+            zoom: 0.75;
+        }
+    }
+    @media (min-width: 1000px) and (max-width: 1100px) {
+        .page-body {
+            zoom: 0.85;
+        }
+    }
+    @media (min-width: 1100px) and (max-width: 1132px) {
+        .page-body {
+            zoom: 0.95;
+        }
+    }
+
+    @keyframes deslizar {
+        from {
+            transform: translateY(-230%);
+        } to {
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes aparecer {
+        0% {
+            opacity: 0;
+            transform: scale(0.4);
+        } 20% {
+            opacity: 1;
+        }
+        100% {
+            transform: scale(1);
+        }
+    }
+
+    @keyframes desaparecer {
+        0% {
+            transform: scale(1);
+        }
+        80% {
+            opacity: 1;
+        }
+        100% {
+            opacity: 0;
+            transform: scale(0.4);
+        }
+    }
+    .images {
+        margin: 0;
+        padding: 0;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        z-index: -3;
+        user-select: none;
+    }
+    .images.ativo {
+        display: flex;
+    }
+    
+    .images img {
+        border: 15px solid rgb(234, 229, 255);
+        aspect-ratio: 1/1;
+        object-fit: cover;
+        margin-left: 40px;
+        width: 250px;
+        height: 250px;
+        border-radius: 100%;
+        box-shadow: -5px 5px 0 gray, 10px -5px 15px black;
+        animation: imageAparecer 0.8s ease 1s both;
+    }
+    @keyframes imageAparecer {
+         0% {
+            transform: translateX(-1000%);
+            opacity: 0;
+            scale: 0;
+        } 50% {
+            transform: translateX(0);
+            scale: 0.4;
+        } 100% {
+            transform: translateX(0);
+            scale: 1;
+            opacity: 1;
+        }
+    }
+    
+    .container-images {
+        background-color: rgb(234, 229, 255);
+        position: relative;
+        z-index: -2;
+        transform: translateX(-30px);
+        margin: 0;
+        padding-left: 45px;
+        padding-right: 30px;
+        padding-top: 15px;
+        padding-bottom: 15px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 150px;
+        width: 80%;
+        animation: containerImages 0.5s ease 1.8s both;
+        border: 2px solid black;
+    }
+    @keyframes containerImages {
+        from {
+            clip-path: inset(0 100% 0 0);
+        } to {
+            clip-path: inset(0 0 0 0);
+        }
+    }
+
+    .container-images h2 {
+        font-family: "Bebas Neue", sans-serif;
+        font-weight: 400;
+        font-style: normal;
+        margin: 0;
+    }
+
+    .agendar {
+        display: none;
+    }
+    .agendar.ativo {
+        display: block;
+    }
+    .sobre {
+        display: none;
+    }
+    .sobre.ativo {
+        display: block;
+    }
+    .pagamentos {
+        display: none;
+    }
+    .pagamentos.ativo {
+        display: block;
+    }
+    
+    .unidade {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        padding: 0;
+        margin: 25px 0 0 0;
+        user-select: none;
+        background-color: rgb(234, 229, 255);
+        box-shadow: 0 5px 15px black, 0 5px 20px black;
+        position: relative;
+        z-index: -3;
+        animation: opacityAparecer 0.5s ease 1.8s both;
+    }
+
+    @keyframes opacityAparecer {
+        from {
+            opacity: 0;
+        } to {
+            opacity: 1;
+        }
+    }
+    .unidade h2, .unidade h3 {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: 'Bebas Neue', sans-serif;
+        font-weight: 400;
+        margin: 15px 0 15px 0;
+        padding: 0;
+        width: 320px;
+    }
+    .unidade h3 {
+        cursor: pointer;
+        text-decoration: underline;
+        transition: transform 0.5s ease;
+    }
+    .unidade h3:hover {
+        animation: DecorationRGB 3s ease infinite;
+        transform: translateY(-4px);
+    }
+    @keyframes DecorationRGB {
+        0% {
+            text-decoration-color: blue;
+        } 25% {
+            text-decoration-color: red;
+        } 50% {
+            text-decoration-color: green;
+        } 75% {
+            text-decoration-color: purple;
+        } 100% {
+            text-decoration-color: blue;
+        }
+    }
+    .unidade img {
+        margin: 0;
+        padding: 0;
+        width: 300px;
+        aspect-ratio: 1/1;
+        object-fit: cover;
+    }
+    .unidade img:nth-child(2) {
+        position: absolute;
+        display: flex;
+        align-items: center;
+        transform: translate(-320px, -8px);
+    }
+    .unidade img:nth-child(3) {
+        position: absolute;
+        display: flex;
+        align-items: center;
+        transform: translate(320px, -8px);
+    }
+    .unidade:not(.ativo) {
+        display: none;
+    }
+
+    .horas {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 15px 0 0 0;
+        padding: 0;
+        width: 100%;
+        animation: scaleAparecer 0.5s ease 2s both;
+        position: relative;
+        z-index: -3;
+        user-select: none;
+    }
+    .horas li {
+        color: white;
+        font-family: 'Arial', sans-serif;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+    .container-servico {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        margin: 15px 0 0 0;
+        padding: 0;
+        user-select: none;
+        animation: scaleAparecer 0.5s ease 2.2s both;
+        position: relative;
+        z-index: -3;
+    }
+    .quadrado1serv, .quadrado2serv, .quadrado3serv {
+        background-color: #59506d82;
+        color: white;
+        font-family: 'Bebas Neue', sans-serif;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 15px;
+        width: 200px;
+        height: 80px;
+    }
+    .container-servico:not(.ativo), .horas:not(.ativo) {
+        display: none;
+    }
+
+        #carrossel {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      margin: 30px 0 0 0;
+      padding: 0;
+    }
+
+    .dia {
+      color: white;
+      font-family: 'Bebas-Neue', sans-serif;
+      margin: 15px;
+    }
+
+    .dia:not(.dia-ativo) {
+        display: none;
+    }
+
+  </style>
+</head>
+<body>
+    <header>
+        <div class="header">
+            <i class="fa-solid fa-bars" onclick="ListOn();"></i><h2>STUDIO BARBER</h2>
+        </div>
+        <div class="header-list">
+            <ul>
+                <li onclick="ativarElemento.call(this);">
+                    <h2><i class="fa-solid fa-house"></i>Ínicio</h2>
+                </li>
+                <li onclick="ativarElemento.call(this);">
+                    <h2><i class="fa-solid fa-calendar"></i>Agendar</h2>
+                </li>
+                <li onclick="ativarElemento.call(this);">
+                    <h2><i class="fa-solid fa-book"></i>Sobre nós</h2>
+                </li>
+                <li onclick="ativarElemento.call(this);">
+                    <h2><i class="fa-solid fa-money-bill"></i>Preços</h2>
+                </li>
+            </ul>
+        </div>
+    </header>
+    <div class="page-body ativo">
+        <div class="quadrado1" onclick="ativarMenu();">
+            <h2><i class="fa-solid fa-house"></i>Ínicio</h2>
+            <span>Esse é o menu inicial.</span>
+            <br>
+            <span>Aperte na barra&nbsp;&nbsp;<i class="fa-solid fa-bars"></i>do menu</span>
+            <span>e selecione "Ínicio" para</span>
+            <span>voltar ao menu inicial.</span>
+            <br>
+            <span>Clique nesses itens para</span>
+            <span>ativar o menu automaticamente</span>
+        </div>
+        <div class="quadrado2" onclick="ativarMenu();">
+            <h2><i class="fa-solid fa-calendar"></i>Agendamento</h2>
+            <span>Agende seu horário conosco!</span>
+            <br>
+            <span>Aperte na barra&nbsp;&nbsp;<i class="fa-solid fa-bars"></i>do menu</span>
+            <span>e selecione "Agendar" para</span>
+            <span>marcar seu horário conosco</span>
+            <br>
+            <span>Aceitamos também pagamentos</span>
+            <span>diretamente pelo site!</span>
+        </div>
+        <div class="quadrado3" onclick="ativarMenu();">
+            <h2><i class="fa-solid fa-book"></i>Sobre nós</h2>
+            <span>Entenda um pouco sobre nós!</span>
+            <br>
+            <span>Aperte na barra&nbsp;&nbsp;<i class="fa-solid fa-bars"></i>do menu</span>
+            <span>e selecione "Sobre nós" para</span>
+            <span>mais informações.</span>
+            <br>
+            <span>Veja como cuidado é essencial</span>
+            <span>para sua aparência.</span>
+        </div>
+        <div class="quadrado4" onclick="ativarMenu();">
+            <h2><i class="fa-solid fa-money-bill"></i>Preços</h2>
+            <span>Confira os detalhes!</span>
+            <br>
+            <span>Aperte na barra&nbsp;&nbsp;<i class="fa-solid fa-bars"></i>do menu</span>
+            <span>e selecione "Preços" para</span>
+            <span>mais informações de pagamentos</span>
+            <br>
+            <span>Veja todos os meios</span>
+            <span>de pagamentos aceitos</span>
+        </div>
+    </div>
+    <div class="images ativo">
+        <img src="img.jpg">
+        <div class="container-images ativo">
+            <h2>Os melhores estilos merecem os melhores profissionais!</h2>
+        </div>
+    </div>
+    <div class="unidade ativo">
+        <h2>Conheça nossa unidade!</h2>
+        <img src="insta3.jpg"><img src="insta1.jpg"><img src="insta2.jpg">
+        <h3 onclick="window.open('https://www.waze.com/pt-BR/live-map/directions/?to=place.w.19530215.195564298.24053532', '_blank');">R. Gago Coutinho, 267 - Parq. Estoril<br>São José do Rio Preto - SP, 15085-210</h3>
+    </div>
+    <div class="horas ativo">
+        <ul>
+            <li><h2><i class="fa-regular fa-clock"></i> Horário de Atendimento</h2></li>
+            <li>Atendemos de segunda a sábado, das 09h00 às 19h00.</li>
+            <li>Domingos e feriados: fechado.</li>
+            <li>Agendamentos podem ser feitos online ou diretamente no local.</li>
+        </ul>
+    </div>
+    <div class="container-servico ativo">
+        <div class="quadrado1serv">
+            <h2><i class="fa-solid fa-scissors"></i> Corte</h2>
+        </div>
+        <div class="quadrado2serv">
+            <h2><i class="fa-solid fa-scissors"></i> Corte + <i class="fa-solid fa-pump-soap"></i> Barba</h2>
+        </div>
+        <div class="quadrado3serv">
+            <h2><i class="fa-solid fa-pump-soap"></i> Barba</h2>
+        </div>
+    </div>
+        <div class="studio-barber-duv ativo">
+            <h3>Dúvidas?</h3>
+            <div class="form-duv">
+            <form action="https://formsubmit.co/gustavopitrowsky@gmail.com" method="POST">
+            <input type="text" name="Nome" required placeholder="Digite seu nome">
+            <input type="email" name="E-mail ou telefone" required placeholder="Digite seu e-mail ou telefone">
+            <textarea name="Dúvida" required placeholder="Digite sua dúvida..."></textarea>
+            <button type="submit">Enviar</button>
+            <input type="hidden" name="_captcha" value="false">
+            <input type="hidden" name="_template" value="box">
+            <input type="hidden" name="_next" value="http://127.0.0.1:5500/">
+            <input type="hidden" name="_autoresponse" value="Recebemos sua dúvida! Em breve entraremos em contato.">
+                </form>
+            </div>
+        </div>
+        <div class="agendar">
+            <div id="carrossel"></div>
+        </div>
+        <div class="sobre">
+            sobre
+        </div>
+        <div class="pagamentos">
+            pagamentos
+        </div>
+</body>
+<script>
+    let bloqueado = false;
+    let menuAtivo = false;
+
+function ListOn() {
+  if (bloqueado) return;
+  bloqueado = true;
+
+  const icon = document.querySelector('.header i');
+
+  icon.classList.add('fade-out');
+
+  setTimeout(() => {
+    // Troca o ícone
+    const isBars = icon.classList.contains('fa-bars');
+    icon.classList.remove('fade-out');
+    icon.classList.remove(isBars ? 'fa-bars' : 'fa-xmark');
+    icon.classList.add(isBars ? 'fa-xmark' : 'fa-bars');
+
+    // Aplica fade-in
+    icon.classList.add('fade-in');
+
+    setTimeout(() => {
+      icon.classList.remove('fade-in');
+      bloqueado = false;
+    }, 300);
+
+  }, 300);
+
+  // Alterna o menu
+  const list = document.querySelector('.header-list');
+  list.classList.toggle('on');
+  if (list.classList.contains('on')) {
+    menuAtivo = true;
+  } else {
+    menuAtivo = false;
+  }
+}
+
+    function ativarMenu() {
+        if (!menuAtivo) {
+            ListOn();
+        }
+    }
+
+    const imageBarber = document.querySelector('.images');
+    const studioBarberDuv = document.querySelector('.studio-barber-duv');
+    const divPageBody = document.querySelector('.page-body');
+    const unidade = document.querySelector('.unidade');
+    const horas = document.querySelector('.horas');
+    const containerServico = document.querySelector('.container-servico');
+    const arrayInicio = [imageBarber, studioBarberDuv, divPageBody, unidade, horas, containerServico];
+
+    function removerAtivos() {
+        let activeElements = document.querySelectorAll('.ativo');
+        activeElements.forEach(el => {
+            if (el.classList.contains('ativo')) el.classList.remove('ativo');
+        });
+    }
+
+    let liAtivoAtual = null;
+
+    function ativarElemento() {
+    if (this === liAtivoAtual) {
+        // Clicou de novo no mesmo item, não faz nada (ou pode fechar o menu se quiser)
+        ListOn();
+        return;
+    }
+
+    liAtivoAtual = this;
+
+    removerAtivos();
+
+    const primeiroLi = document.querySelector('.header-list li:nth-child(1)');
+    const segundoLi = document.querySelector('.header-list li:nth-child(2)');
+    const terceiroLi = document.querySelector('.header-list li:nth-child(3)');
+    const quartoLi = document.querySelector('.header-list li:nth-child(4)');
+
+    if (this === primeiroLi) {
+        arrayInicio.forEach(el => el.classList.add('ativo'));
+    } else if (this === segundoLi) {
+        document.querySelector('.agendar').classList.add('ativo');
+    } else if (this === terceiroLi) {
+        document.querySelector('.sobre').classList.add('ativo');
+    } else if (this === quartoLi) {
+        document.querySelector('.pagamentos').classList.add('ativo');
+    }
+
+    ListOn();
+}
+
+function atualizarData() {
+const dataHoje = new Date();
+
+function formatarData(data) {
+  const dia = String(data.getDate()).padStart(2, '0');
+  const mes = String(data.getMonth() + 1).padStart(2, '0');
+  const ano = data.getFullYear();
+  return `${dia}/${mes}/${ano}`;
+}
+
+const dataOntem = new Date(dataHoje);
+dataOntem.setDate(dataHoje.getDate() - 1);
+const ontemFormatado = formatarData(dataOntem);
+
+const hojeFormatado = formatarData(dataHoje);
+
+const dataAmanha = new Date(dataHoje);
+dataAmanha.setDate(dataHoje.getDate() + 1);
+const amanhaFormatado = formatarData(dataAmanha);
+
+const diasFuturos = [];
+for(let i = 2; i <= 6; i++) {
+  const dataFutura = new Date(dataHoje);
+  dataFutura.setDate(dataHoje.getDate() + i);
+  diasFuturos.push(formatarData(dataFutura));
+}
+
+const ontem = ontemFormatado;
+const hoje = hojeFormatado;
+const amanha = amanhaFormatado;
+const dia3 = diasFuturos[0]; 
+const dia4 = diasFuturos[1]; 
+const dia5 = diasFuturos[2]; 
+const dia6 = diasFuturos[3]; 
+const dia7 = diasFuturos[4]; 
+}
+
+  const diasSemana = ["Domingo", "Segunda-feira", "Terça-feira", "Quarta-feira", "Quinta-feira", "Sexta-feira", "Sábado"];
+  const hoje = new Date();
+  const diaAtual = hoje.getDay(); // 0 = Domingo, 6 = Sábado
+
+  const nomes = [];
+
+  for (let i = 0; i < 7; i++) {
+    const index = (diaAtual + i) % 7;
+    if (i === 0) {
+      nomes.push("Hoje");
+    } else if (i === 1) {
+      nomes.push("Amanhã");
+    } else {
+      nomes.push(diasSemana[index]);
+    }
+  }
+
+  const container = document.getElementById("carrossel");
+
+  nomes.forEach(nome => {
+    const el = document.createElement("h2");
+    el.className = "dia";
+    el.textContent = nome;
+    container.appendChild(el);
+    const atual = document.querySelector('.dia:nth-child(1)');
+    atual.classList.add('dia-ativo');
+  });
+</script>
+</html>
